@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using NewsFlow.Application.DTOs;
+using NewsFlow.Application.UseCases.AddFeeds;
 using NewsFlow.Application.UseCases.LoadFeeds;
 using NewsFlow.Data.Models;
 using NewsFlow.Web.Mapping.FeedMapping;
@@ -12,18 +13,22 @@ namespace NewsFlow.Web.Controllers
     {
         private readonly ILogger<FeedsController> _logger;
         private readonly IGetFeeds _getFeeds;
+        private readonly IAddFeeds _addFeeds;
         private readonly IFeedMapper _mapper;
 
         public FeedsController(
             ILogger<FeedsController> logger,
             IGetFeeds getFeeds,
+            IAddFeeds addFeeds,
             IFeedMapper mapper)
         {
             _logger = logger;
             _getFeeds = getFeeds;
+            _addFeeds = addFeeds;
             _mapper = mapper;
         }
 
+        // Todo: error handling
         [HttpGet]
         public async Task<IActionResult> ListFeeds()
         {
@@ -39,10 +44,17 @@ namespace NewsFlow.Web.Controllers
             throw new NotImplementedException();
         }
 
+        //Todo: Check if link is unique by stripping it off http/wwww
+        [Route("api/[controller]")]
         [HttpPost]
         public async Task<IActionResult> AddFeed([FromBody] AddFeedDto data)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            await _addFeeds.AddFeed(data);
+            return Ok();
         }
 
         [HttpDelete("{feedId}")]

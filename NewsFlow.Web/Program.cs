@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NewsFlow.Application.UseCases.AddFeeds;
 using NewsFlow.Application.UseCases.LoadFeeds;
 using NewsFlow.Data.Infrastructure;
 using NewsFlow.Data.Repositories.FeedRepository;
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<RssDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("RssDbConnectionString")));
 builder.Services.AddScoped<IAsyncFeedRepository, AsyncFeedRepository>();
 builder.Services.AddScoped<IGetFeeds, GetFeeds>();
+builder.Services.AddScoped<IAddFeeds, AddFeeds>();
 builder.Services.AddScoped<IFeedMapper, FeedMapper>();
 
 var app = builder.Build();
@@ -37,6 +39,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Feeds}/{action=ListFeeds}");
-
 app.Run();
 
