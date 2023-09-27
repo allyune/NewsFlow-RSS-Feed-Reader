@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsFlow.Web", "NewsFlow.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsFlow.Application", "NewsFlow.Application\NewsFlow.Application.csproj", "{8FFD781A-E981-44B5-9DEF-419AB42D0FFB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsFlow.Domain", "NewsFlow.Domain\NewsFlow.Domain.csproj", "{C4C3543B-EE53-44CC-B592-BFC7F10F6981}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{8FFD781A-E981-44B5-9DEF-419AB42D0FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FFD781A-E981-44B5-9DEF-419AB42D0FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FFD781A-E981-44B5-9DEF-419AB42D0FFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4C3543B-EE53-44CC-B592-BFC7F10F6981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C3543B-EE53-44CC-B592-BFC7F10F6981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C3543B-EE53-44CC-B592-BFC7F10F6981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C3543B-EE53-44CC-B592-BFC7F10F6981}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
