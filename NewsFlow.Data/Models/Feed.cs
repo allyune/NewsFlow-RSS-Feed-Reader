@@ -2,7 +2,7 @@
 
 namespace NewsFlow.Data.Models
 {
-    public class Feed : BaseDatabaseModel
+    public class Feed : BaseDbModel
     {
         [Required]
         public string Name { get; private set; }

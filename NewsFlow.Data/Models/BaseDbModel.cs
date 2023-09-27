@@ -3,18 +3,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NewsFlow.Data.Models
 {
-    public abstract class BaseDatabaseModel
+    public abstract class BaseDbModel
     {
         [Required]
         public Guid Id { get; private set; }
 
-        protected BaseDatabaseModel()
+        protected BaseDbModel()
         {
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            var compareTo = obj as BaseDatabaseModel;
+            var compareTo = obj as BaseDbModel;
 
             if (ReferenceEquals(this, compareTo))
                 return true;
@@ -25,7 +25,7 @@ namespace NewsFlow.Data.Models
             return Id.Equals(compareTo.Id);
         }
 
-        public static bool operator ==(BaseDatabaseModel a, BaseDatabaseModel b)
+        public static bool operator ==(BaseDbModel a, BaseDbModel b)
         {
             if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
                 return true;
@@ -36,7 +36,7 @@ namespace NewsFlow.Data.Models
             return a.Equals(b);
         }
 
-        public static bool operator !=(BaseDatabaseModel? a, BaseDatabaseModel? b) => !(a == b);
+        public static bool operator !=(BaseDbModel? a, BaseDbModel? b) => !(a == b);
 
         public override string ToString()
         {
