@@ -29,10 +29,15 @@ namespace NewsFlow.Data.Infrastructure
             return exists;
         }
 
-        Task<List<T>> IAsyncRepository<T>.ListAsync(
+        async Task<List<T>> IAsyncRepository<T>.ListAsync(
             Expression<Func<T, bool>> expression)
         {
-            return _dbSet.Where(expression).ToListAsync();
+            return await _dbSet.Where(expression).ToListAsync();
+        }
+
+        async Task<List<T>> IAsyncRepository<T>.ListAllAsync()
+        {
+            return await _dbSet.ToListAsync();
         }
 
         async Task IAsyncRepository<T>.AddAsync(T entity)
