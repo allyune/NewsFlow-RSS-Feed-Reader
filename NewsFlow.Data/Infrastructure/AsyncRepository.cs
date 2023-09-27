@@ -2,7 +2,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using NewsFlow.Data.Models;
-using NewsFlow.Data.NewsFlowDbContext;
 
 namespace NewsFlow.Data.Infrastructure
 {
