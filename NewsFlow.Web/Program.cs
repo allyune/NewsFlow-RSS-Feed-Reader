@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NewsFlow.Application.Mapping;
 using NewsFlow.Application.UseCases.AddFeeds;
 using NewsFlow.Application.UseCases.DeleteFeeds;
 using NewsFlow.Application.UseCases.LoadFeeds;
@@ -18,8 +19,9 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("RssDbConnectionStri
 builder.Services.AddScoped<IAsyncFeedRepository, AsyncFeedRepository>();
 builder.Services.AddScoped<IGetFeeds, GetFeeds>();
 builder.Services.AddScoped<IAddFeeds, AddFeeds>();
-builder.Services.AddScoped<IDeleteFeeds, DeleteFeeds>(); 
+builder.Services.AddScoped<IDeleteFeeds, DeleteFeeds>();
 builder.Services.AddScoped<IFeedMapper, FeedMapper>();
+builder.Services.AddScoped<IArticleMapper, ArticleMapper>();
 
 var app = builder.Build();
 

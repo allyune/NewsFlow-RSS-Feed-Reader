@@ -13,6 +13,7 @@
     <None Remove="UseCases\AddFeeds\" />
     <None Remove="UseCases\DeleteFeeds\" />
     <None Remove="UseCases\Exceptions\" />
+    <None Remove="Mapping\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTOs\" />
@@ -21,6 +22,7 @@
     <Folder Include="UseCases\AddFeeds\" />
     <Folder Include="UseCases\DeleteFeeds\" />
     <Folder Include="UseCases\Exceptions\" />
+    <Folder Include="Mapping\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NewsFlow.Data\NewsFlow.Data.csproj" />
