@@ -59,5 +59,4 @@ namespace NewsFlow.Application.UseCases.AddFeeds
             }
         }
     }
-}
 
