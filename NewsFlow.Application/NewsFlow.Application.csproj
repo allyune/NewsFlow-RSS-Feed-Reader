@@ -6,4 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="DTOs\" />
+    <None Remove="UseCases\" />
+    <None Remove="UseCases\LoadFeeds\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+    <Folder Include="UseCases\" />
+    <Folder Include="UseCases\LoadFeeds\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NewsFlow.Data\NewsFlow.Data.csproj" />
+  </ItemGroup>
 </Project>
