@@ -56,6 +56,7 @@ namespace NewsFlow.Application.UseCases.AddFeeds
                 newFeed.Id, newFeed.Name, newFeed.Link, newFeed.Description);
             await _feedRepository.AddAsync(feedModel);
             await _feedRepository.SaveChangesAsync();
+            }
         }
     }
 }

@@ -28,7 +28,6 @@ namespace NewsFlow.Web.Controllers
             _mapper = mapper;
         }
 
-        // Todo: error handling
         [HttpGet]
         public async Task<IActionResult> ListFeeds()
         {
@@ -44,7 +43,6 @@ namespace NewsFlow.Web.Controllers
             throw new NotImplementedException();
         }
 
-        //Todo: Check if link is unique by stripping it off http/wwww
         [Route("api/[controller]")]
         [HttpPost]
         public async Task<IActionResult> AddFeed([FromBody] AddFeedDto data)
@@ -53,8 +51,19 @@ namespace NewsFlow.Web.Controllers
             {
                 return BadRequest(ModelState);
             }
-            await _addFeeds.AddFeed(data);
-            return Ok();
+            try
+            {
+                await _addFeeds.AddFeed(data);
+                return Ok();
+            }
+            catch (LinkNotUniqueException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (HttpRequestException)
+            {
+                return BadRequest("Rss Feed URL is unreachanble.");
+            }
         }
 
         [HttpDelete("{feedId}")]
