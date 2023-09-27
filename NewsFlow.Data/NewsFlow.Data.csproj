@@ -10,11 +10,13 @@
     <None Remove="Models\" />
     <None Remove="Infrastructure\" />
     <None Remove="Repositories\" />
+    <None Remove="Repositories\FeedRepository\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Repositories\" />
+    <Folder Include="Repositories\FeedRepository\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
