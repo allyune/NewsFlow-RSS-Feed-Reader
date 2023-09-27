@@ -1,22 +1,36 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using NewsFlow.Application.DTOs;
+using NewsFlow.Application.UseCases.LoadFeeds;
+using NewsFlow.Data.Models;
+using NewsFlow.Web.Mapping.FeedMapping;
+using NewsFlow.Web.ViewModels;
 
 namespace NewsFlow.Web.Controllers
 {
-    [Route("api/[controller]")]
     public class FeedsController : Controller
     {
         private readonly ILogger<FeedsController> _logger;
+        private readonly IGetFeeds _getFeeds;
+        private readonly IFeedMapper _mapper;
 
-        public FeedsController(ILogger<FeedsController> logger)
+        public FeedsController(
+            ILogger<FeedsController> logger,
+            IGetFeeds getFeeds,
+            IFeedMapper mapper)
         {
             _logger = logger;
+            _getFeeds = getFeeds;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> ListFeeds()
         {
-            throw new NotImplementedException();
+            List<Feed> allFeeds = await _getFeeds.ListFeeds();
+            List<FeedMetadataViewModel> metadata = allFeeds.Select(
+                _mapper.FeedMetadataToViewModel).ToList();
+            return View(metadata);
         }
 
         [HttpGet("{feedId}")]
