@@ -5,10 +5,10 @@ using NewsFlow.Application.UseCases;
 using NewsFlow.Application.UseCases.AddFeeds;
 using NewsFlow.Application.UseCases.DeleteFeeds;
 using NewsFlow.Application.UseCases.LoadFeeds;
-using NewsFlow.Data.Models;
+using NewsFlow.Domain.Entities;
 using NewsFlow.Web.Mapping.FeedMapping;
 using NewsFlow.Web.ViewModels;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Models = NewsFlow.Data.Models;
 
 namespace NewsFlow.Web.Controllers
 {
@@ -37,7 +37,7 @@ namespace NewsFlow.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> ListFeeds()
         {
-            List<Feed> allFeeds = await _getFeeds.ListFeeds();
+            List<Models.Feed> allFeeds = await _getFeeds.ListFeeds();
             List<FeedMetadataViewModel> metadata = allFeeds.Select(
                 _mapper.FeedMetadataToViewModel).ToList();
             return View(metadata);
@@ -49,7 +49,7 @@ namespace NewsFlow.Web.Controllers
         {
             try
             {
-                Feed feed = await _getFeeds.GetFeed(feedId);
+                Models.Feed feed = await _getFeeds.GetFeed(feedId);
                 return Json(feed);
             }
             catch (FeedNotFoundException ex)
@@ -122,10 +122,18 @@ namespace NewsFlow.Web.Controllers
             }
         }
 
-        [HttpGet("{feedId}")]
-        public async Task<IActionResult> LoadFeedArticles(Guid feedId)
+        [Route("api/[controller]/{feedId}/articles")]
+        [HttpGet]
+        public async Task<IActionResult> LoadFeedArticles(string feedId)
         {
-            throw new NotImplementedException();
+            Guid id;
+            bool isGuid = Guid.TryParse(feedId, out id);
+            if (!isGuid)
+            {
+                return BadRequest("Wrong Feed Id format.");
+            }
+            List<Article> artcles = await _getFeeds.LoadArticles(id);
+            return Ok(Json(artcles));
         }
 
     }

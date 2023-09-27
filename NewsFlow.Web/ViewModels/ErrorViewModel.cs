@@ -1,4 +1,4 @@
-﻿namespace NewsFlow.Web.Models;
+﻿namespace NewsFlow.Web.ViewModels;
 
 public class ErrorViewModel
 {
