@@ -37,10 +37,26 @@ namespace NewsFlow.Web.Controllers
             return View(metadata);
         }
 
-        [HttpGet("{feedId}")]
+        [Route("api/[controller]/{feedId}")]
+        [HttpGet]
         public async Task<IActionResult> LoadFeedDetails(Guid feedId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Feed feed = await _getFeeds.GetFeed(feedId);
+                return Json(feed);
+            }
+            catch (FeedNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error when fetching Feed id {feedId}, {ex.Message}");
+                return StatusCode(
+                    500, "Error occured when fetching the Feed. Please try again");
+            }
+            
         }
 
         [Route("api/[controller]")]
@@ -64,6 +80,12 @@ namespace NewsFlow.Web.Controllers
             {
                 _logger.LogWarning($"Http error when accessing URL {data.Link}: {ex.Message}");
                 return BadRequest("Rss Feed URL is unreachanble.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error when adding RSS feed {data.Link}: {ex.Message}");
+                return StatusCode(
+                    500, "Error occured when adding the Feed. Please try again");
             }
         }
 
