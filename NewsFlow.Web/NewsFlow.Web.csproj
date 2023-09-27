@@ -22,4 +22,16 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Controllers\" />
+    <None Remove="ViewModels\" />
+    <None Remove="Views\Feeds\" />
+    <None Remove="Mapping\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\Feeds\" />
+    <Folder Include="Mapping\" />
+  </ItemGroup>
 </Project>
