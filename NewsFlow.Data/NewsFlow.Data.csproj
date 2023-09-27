@@ -8,11 +8,11 @@
 
   <ItemGroup>
     <None Remove="Models\" />
-    <None Remove="RssDbContext\" />
+    <None Remove="NewsFlowDbContext\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="RssDbContext\" />
+    <Folder Include="NewsFlowDbContext\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />

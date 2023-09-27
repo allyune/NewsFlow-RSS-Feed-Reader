@@ -29,7 +29,7 @@ namespace NewsFlow.Data.NewsFlowDbContext
                 .IsUnique();
         }
 
-        public DbSet<Feed> Users { get; set; }
+        public DbSet<Feed> Feeds { get; set; }
     }
 }
 
