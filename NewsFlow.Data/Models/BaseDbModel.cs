@@ -6,7 +6,7 @@ namespace NewsFlow.Data.Models
     public abstract class BaseDbModel
     {
         [Required]
-        public Guid Id { get; private set; }
+        public Guid Id { get; protected set; }
 
         protected BaseDbModel()
         {
