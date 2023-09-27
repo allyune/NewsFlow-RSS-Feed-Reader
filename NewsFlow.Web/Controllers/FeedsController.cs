@@ -60,8 +60,9 @@ namespace NewsFlow.Web.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
+                _logger.LogWarning($"Http error when accessing URL {data.Link}: {ex.Message}");
                 return BadRequest("Rss Feed URL is unreachanble.");
             }
         }

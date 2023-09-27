@@ -38,7 +38,7 @@ namespace NewsFlow.Application.UseCases.AddFeeds
         }
 
 
-    public async Task AddFeed(AddFeedDto data)
+        public async Task AddFeed(AddFeedDto data)
         {
             string name = data.Name;
             string link = data.Link.ToLower();
