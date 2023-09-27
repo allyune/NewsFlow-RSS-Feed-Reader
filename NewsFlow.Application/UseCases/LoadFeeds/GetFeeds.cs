@@ -47,14 +47,16 @@ namespace NewsFlow.Application.UseCases.LoadFeeds
                     $"Feed with id {feedId} not found");
             }
             using var reader = XmlReader.Create(feed.Link);
-            var feedXml = SyndicationFeed.Load(reader);
-            var items = feedXml.Items.ToList();
+            var formatter = new Rss20FeedFormatter();
+            formatter.ReadFrom(reader);
+            List<SyndicationItem> items = formatter.Feed.Items.ToList();
+
             var articles = items.Select(
                 _mapper.FeedItemToArticle)
                 .ToList();
-            return articles;
-        }
 
+            return articles; 
+        }
     }
 }
 
