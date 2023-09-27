@@ -1,5 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NewsFlow.Application.Mapping;
+using NewsFlow.Application.UseCases.AddFeeds;
+using NewsFlow.Application.UseCases.DeleteFeeds;
+using NewsFlow.Application.UseCases.LoadFeeds;
 using NewsFlow.Data.Infrastructure;
+using NewsFlow.Data.Repositories.FeedRepository;
+using NewsFlow.Web.Mapping.FeedMapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +16,12 @@ builder.Configuration.AddJsonFile("appsettings.Development.json");
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<RssDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("RssDbConnectionString")));
+builder.Services.AddScoped<IAsyncFeedRepository, AsyncFeedRepository>();
+builder.Services.AddScoped<IGetFeeds, GetFeeds>();
+builder.Services.AddScoped<IAddFeeds, AddFeeds>();
+builder.Services.AddScoped<IDeleteFeeds, DeleteFeeds>();
+builder.Services.AddScoped<IFeedMapper, FeedMapper>();
+builder.Services.AddScoped<IArticleMapper, ArticleMapper>();
 
 var app = builder.Build();
 
@@ -21,7 +33,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -30,7 +42,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+    pattern: "{controller=Feeds}/{action=ListFeeds}");
 app.Run();
 

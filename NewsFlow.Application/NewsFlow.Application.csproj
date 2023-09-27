@@ -6,4 +6,29 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="DTOs\" />
+    <None Remove="UseCases\" />
+    <None Remove="UseCases\LoadFeeds\" />
+    <None Remove="UseCases\AddFeeds\" />
+    <None Remove="UseCases\DeleteFeeds\" />
+    <None Remove="UseCases\Exceptions\" />
+    <None Remove="Mapping\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+    <Folder Include="UseCases\" />
+    <Folder Include="UseCases\LoadFeeds\" />
+    <Folder Include="UseCases\AddFeeds\" />
+    <Folder Include="UseCases\DeleteFeeds\" />
+    <Folder Include="UseCases\Exceptions\" />
+    <Folder Include="Mapping\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NewsFlow.Data\NewsFlow.Data.csproj" />
+    <ProjectReference Include="..\NewsFlow.Domain\NewsFlow.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.ServiceModel.Syndication" Version="7.0.0" />
+  </ItemGroup>
 </Project>

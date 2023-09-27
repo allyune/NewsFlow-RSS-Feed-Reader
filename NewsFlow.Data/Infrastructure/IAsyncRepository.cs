@@ -12,6 +12,8 @@ namespace NewsFlow.Data.Infrastructure
 
         Task<List<T>> ListAsync(Expression<Func<T, bool>> expression);
 
+        Task<List<T>> ListAllAsync();
+
         Task AddAsync(T entity);
 
         Task<bool> DeleteAsync(T entity);

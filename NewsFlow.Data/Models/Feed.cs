@@ -16,17 +16,18 @@ namespace NewsFlow.Data.Models
         public DateTime TimestampAdded { get; private set; }
 
         private Feed(
-            string name, string link, string description)
+            Guid id, string name, string link, string description)
         {
+            Id = id;
             Name = name;
             Link = link;
             Description = description;
         }
 
         public static Feed Create(
-            string name, string link, string description)
+            Guid id, string name, string link, string description)
         {
-            return new Feed(name, link, description);
+            return new Feed(id, name, link, description);
         }
     }
 }
