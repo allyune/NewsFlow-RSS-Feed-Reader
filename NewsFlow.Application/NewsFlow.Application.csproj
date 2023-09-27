@@ -10,13 +10,19 @@
     <None Remove="DTOs\" />
     <None Remove="UseCases\" />
     <None Remove="UseCases\LoadFeeds\" />
+    <None Remove="UseCases\AddFeeds\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTOs\" />
     <Folder Include="UseCases\" />
     <Folder Include="UseCases\LoadFeeds\" />
+    <Folder Include="UseCases\AddFeeds\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NewsFlow.Data\NewsFlow.Data.csproj" />
+    <ProjectReference Include="..\NewsFlow.Domain\NewsFlow.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.ServiceModel.Syndication" Version="7.0.0" />
   </ItemGroup>
 </Project>
