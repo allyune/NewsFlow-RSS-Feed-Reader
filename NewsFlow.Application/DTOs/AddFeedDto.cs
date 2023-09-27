@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace NewsFlow.Application.DTOs
 {
@@ -18,15 +19,10 @@ namespace NewsFlow.Application.DTOs
 			ErrorMessage = "Invalid email, make sure that link starts with http/https://")]
         public string Link { get; private set; }
 
-		private AddFeedDto(string name, string link)
+		public AddFeedDto(string name, string link)
 		{
 			Name = name;
 			Link = link;
-		}
-
-		public static AddFeedDto Create(string name, string link)
-		{
-			return new AddFeedDto(name, link);
 		}
 
     }
