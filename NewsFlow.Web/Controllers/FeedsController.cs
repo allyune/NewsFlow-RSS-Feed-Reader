@@ -1,11 +1,14 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using NewsFlow.Application.DTOs;
+using NewsFlow.Application.UseCases;
 using NewsFlow.Application.UseCases.AddFeeds;
+using NewsFlow.Application.UseCases.DeleteFeeds;
 using NewsFlow.Application.UseCases.LoadFeeds;
 using NewsFlow.Data.Models;
 using NewsFlow.Web.Mapping.FeedMapping;
 using NewsFlow.Web.ViewModels;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NewsFlow.Web.Controllers
 {
@@ -14,18 +17,21 @@ namespace NewsFlow.Web.Controllers
         private readonly ILogger<FeedsController> _logger;
         private readonly IGetFeeds _getFeeds;
         private readonly IAddFeeds _addFeeds;
+        private readonly IDeleteFeeds _deleteFeeds;
         private readonly IFeedMapper _mapper;
 
         public FeedsController(
             ILogger<FeedsController> logger,
             IGetFeeds getFeeds,
             IAddFeeds addFeeds,
+            IDeleteFeeds deleteFeeds,
             IFeedMapper mapper)
         {
             _logger = logger;
             _getFeeds = getFeeds;
             _addFeeds = addFeeds;
             _mapper = mapper;
+            _deleteFeeds = deleteFeeds;
         }
 
         [HttpGet]
@@ -89,10 +95,31 @@ namespace NewsFlow.Web.Controllers
             }
         }
 
-        [HttpDelete("{feedId}")]
-        public async Task<IActionResult> DeleteFeed(Guid feedId)
+        [Route("api/[controller]/{feedId}")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteFeed(string feedId)
         {
-            throw new NotImplementedException();
+            Guid id;
+            bool isGuid = Guid.TryParse(feedId, out id);
+            if (!isGuid)
+            {
+                return BadRequest("Wrong Feed Id format.");
+            }
+            try
+            {
+                await _deleteFeeds.DeleteFeed(id);
+                return Ok();
+            }
+            catch (FeedNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error when deleting Feed id {id}: {ex.Message}");
+                return StatusCode(
+                    500, "Error occured when deleting the Feed. Please try again");
+            }
         }
 
         [HttpGet("{feedId}")]

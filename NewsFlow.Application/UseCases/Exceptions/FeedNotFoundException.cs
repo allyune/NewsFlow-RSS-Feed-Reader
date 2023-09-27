@@ -1,5 +1,5 @@
 ﻿using System;
-namespace NewsFlow.Application.UseCases.LoadFeeds
+namespace NewsFlow.Application.UseCases
 {
     public class FeedNotFoundException : Exception
     {

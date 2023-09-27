@@ -1,5 +1,5 @@
 ﻿using System;
-namespace NewsFlow.Application.UseCases.AddFeeds
+namespace NewsFlow.Application.UseCases
 {
 	public class LinkNotUniqueException : Exception 
 	{
