@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NewsFlow.Data.NewsFlowDbContext;
+using NewsFlow.Data.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 

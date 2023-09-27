@@ -6,7 +6,7 @@ using NewsFlow.Data.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace NewsFlow.Data.NewsFlowDbContext
+namespace NewsFlow.Data.Infrastructure
 {
     public class RssDbContext : DbContext
     {
