@@ -30,11 +30,15 @@
     <None Remove="ViewModels\" />
     <None Remove="Views\Feeds\" />
     <None Remove="Mapping\" />
+    <None Remove="ViewComponents\" />
+    <None Remove="Views\Feeds\Components\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Views\Feeds\" />
     <Folder Include="Mapping\" />
+    <Folder Include="ViewComponents\" />
+    <Folder Include="Views\Feeds\Components\" />
   </ItemGroup>
 </Project>
