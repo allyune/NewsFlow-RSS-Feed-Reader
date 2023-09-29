@@ -1,1 +1,1 @@
-# NewsFlow
+# NewsFlow - Minimalistic RSS Feed Reader
