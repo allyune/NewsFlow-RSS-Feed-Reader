@@ -4,13 +4,19 @@
     ViewData["Title"] = "NewsFlow: Minimalistic RSS Reader";
 }
 
-<div>
-    <p>@Model.LastUpdated</p>
-    <p>@Model.Name</p>
-    <p>@Model.Description</p>
+<div class="feed-header">
+    <p class="feed-updated">
+        Last Updated:
+        @Model.LastUpdated.ToShortDateString()
+        @Model.LastUpdated.ToShortTimeString()
+    </p>
+</div>
+
+<div class="articles-container">
+
 </div>
 
 
-
+<script src="~/js/read-feed.js"></script>
 
 
