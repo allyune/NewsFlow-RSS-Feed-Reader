@@ -1,0 +1,22 @@
+﻿@model NewsFlow.Web.ViewModels.FeedViewModel
+@{
+    Layout = "_FeedReaderLayout";
+    ViewData["Title"] = "NewsFlow: Minimalistic RSS Reader";
+}
+
+<div class="feed-header">
+    <p class="feed-updated">
+        Last Updated:
+        @Model.LastUpdated.ToShortDateString()
+        @Model.LastUpdated.ToShortTimeString()
+    </p>
+</div>
+
+<div class="articles-container">
+
+</div>
+
+
+<script src="~/js/read-feed.js"></script>
+
+

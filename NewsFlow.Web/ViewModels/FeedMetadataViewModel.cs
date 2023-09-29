@@ -5,16 +5,20 @@ namespace NewsFlow.Web.ViewModels
 	{
 		public string Name { get; set; }
 		public string Description { get; set; }
+		public string Link { get; set; }
 
-		private FeedMetadataViewModel(string name, string description)
+		private FeedMetadataViewModel(
+			string name, string description, string link)
 		{
 			Name = name;
 			Description = description;
+			Link = link;
 		}
 
-		public static FeedMetadataViewModel Create(string name, string description)
+		public static FeedMetadataViewModel Create(
+			string name, string description, string link)
 		{
-			return new FeedMetadataViewModel(name, description);
+			return new FeedMetadataViewModel(name, description, link);
 
         }
 

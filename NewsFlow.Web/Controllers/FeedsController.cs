@@ -43,14 +43,15 @@ namespace NewsFlow.Web.Controllers
             return View(metadata);
         }
 
-        [Route("api/[controller]/{feedId}")]
+        [Route("[controller]/{feedId}")]
         [HttpGet]
-        public async Task<IActionResult> LoadFeedDetails(Guid feedId)
+        public async Task<IActionResult> ReadFeed(Guid feedId)
         {
             try
             {
                 Models.Feed feed = await _getFeeds.GetFeed(feedId);
-                return Json(feed);
+                FeedViewModel feedData = _mapper.FeedToViewModel(feed);
+                return View(feedData);
             }
             catch (FeedNotFoundException ex)
             {
@@ -62,7 +63,20 @@ namespace NewsFlow.Web.Controllers
                 return StatusCode(
                     500, "Error occured when fetching the Feed. Please try again");
             }
-            
+        }
+
+        [Route("api/[controller]/{feedId}/articles")]
+        [HttpGet]
+        public async Task<IActionResult> LoadFeedArticles(string feedId)
+        {
+            Guid id;
+            bool isGuid = Guid.TryParse(feedId, out id);
+            if (!isGuid)
+            {
+                return BadRequest("Wrong Feed Id format.");
+            }
+            List<Article> artcles = await _getFeeds.LoadArticles(id);
+            return Ok(Json(artcles));
         }
 
         [Route("api/[controller]")]
@@ -120,20 +134,6 @@ namespace NewsFlow.Web.Controllers
                 return StatusCode(
                     500, "Error occured when deleting the Feed. Please try again");
             }
-        }
-
-        [Route("api/[controller]/{feedId}/articles")]
-        [HttpGet]
-        public async Task<IActionResult> LoadFeedArticles(string feedId)
-        {
-            Guid id;
-            bool isGuid = Guid.TryParse(feedId, out id);
-            if (!isGuid)
-            {
-                return BadRequest("Wrong Feed Id format.");
-            }
-            List<Article> artcles = await _getFeeds.LoadArticles(id);
-            return Ok(Json(artcles));
         }
 
     }
