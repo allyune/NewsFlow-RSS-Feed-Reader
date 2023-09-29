@@ -31,6 +31,10 @@ main {
     width: 100%;
 }
 
+button {
+  outline: none;
+}
+
 .navbar {
     margin: 0px !important;
     padding: 0px !important;
@@ -214,3 +218,45 @@ input[type="text"][name="daterange"] {
     margin-right: 0.3rem;
     background-color: #ededed;
 }
+
+.feed-control-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+}
+
+.feed-control-buttons > button {
+    margin-right: 1rem;
+}
+
+.btn-reload {
+    background-color: #3B7A57;
+    color: white;
+}
+
+.btn-reload:active {
+    background-color: #3B7A57;
+    color: white;
+}
+
+.btn-reload:hover {
+    background-color: #3F704D;
+    color: white;
+}
+
+.btn-unsubscribe {
+    background-color: #B22222;
+    color: white;
+}
+
+.btn-unsubscribe:active {
+    background-color: #B22222;
+    color: white;
+}
+
+.btn-unsubscribe:hover {
+    background-color: #800000;
+    color: white;
+}
+

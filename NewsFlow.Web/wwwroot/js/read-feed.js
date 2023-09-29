@@ -18,7 +18,8 @@ async function fetchArticles(feedId) {
 
 function displayArticles(data) {
     const articleContainer = document.querySelector('.articles-container');
-    for (const article of data["value"]) {
+    articleContainer.innerHTML = ' ';
+    for (const article of data.value) {
         const div = createArticleElement(article);
         articleContainer.appendChild(div);
     }
@@ -73,7 +74,10 @@ function getFeedId() {
 function initReadFeed() {
     console.log("View initialized");
     loadArticles();
+    var reloadButton = document.querySelector(".btn-reload");
+    reloadButton.addEventListener('click', loadArticles);
 };
+
 
 window.addEventListener('load', initReadFeed);
 
