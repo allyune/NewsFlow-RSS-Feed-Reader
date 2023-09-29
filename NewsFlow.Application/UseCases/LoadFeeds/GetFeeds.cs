@@ -6,6 +6,8 @@ using Models =  NewsFlow.Data.Models;
 using NewsFlow.Data.Repositories.FeedRepository;
 using NewsFlow.Domain.Entities;
 using NewsFlow.Application.Mapping;
+using System.Runtime.Serialization;
+using NewsFlow.Application.UseCases.Helpers;
 
 namespace NewsFlow.Application.UseCases.LoadFeeds
 {
@@ -14,16 +16,20 @@ namespace NewsFlow.Application.UseCases.LoadFeeds
 		private readonly IAsyncFeedRepository _feedRepository;
         private readonly IArticleMapper _mapper;
         private readonly ILogger<GetFeeds> _logger;
+        private readonly IParseFeedHelpers _parseFeedHelpers;
 
 		public GetFeeds(
 			IAsyncFeedRepository repository,
             IArticleMapper mapper,
-            ILogger<GetFeeds> logger)
+            ILogger<GetFeeds> logger,
+            IParseFeedHelpers helpers)
 		{
 			_feedRepository = repository;
             _mapper = mapper;
 			_logger = logger;
-		}
+            _parseFeedHelpers = helpers;
+
+        }
         public async Task<List<Models.Feed>> ListFeeds()
 		{
 			return await _feedRepository.ListAllAsync();
@@ -40,16 +46,23 @@ namespace NewsFlow.Application.UseCases.LoadFeeds
 
         public async Task<List<Article>> LoadArticles(Guid feedId)
         {
-            Models.Feed? feed = await _feedRepository.GetAsync(f => f.Id == feedId);
-            if (feed is null)
+            Models.Feed? savedFeed = await _feedRepository.GetAsync(f => f.Id == feedId);
+            if (savedFeed is null)
             {
                 throw new FeedNotFoundException(
                     $"Feed with id {feedId} not found");
             }
-            using var reader = XmlReader.Create(feed.Link);
-            var formatter = new Rss20FeedFormatter();
-            formatter.ReadFrom(reader);
-            List<SyndicationItem> items = formatter.Feed.Items.ToList();
+            using var reader = XmlReader.Create(savedFeed.Link);
+            SyndicationFeed feed;
+            try
+            {
+                feed = _parseFeedHelpers.GetRss2Feed(reader);
+            }
+            catch (XmlException)
+            {
+                feed = _parseFeedHelpers.GetAtomFeed(reader);
+            }
+            var items = feed.Items.ToList();
 
             var articles = items.Select(
                 _mapper.FeedItemToArticle)

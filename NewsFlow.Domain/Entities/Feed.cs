@@ -27,12 +27,6 @@ namespace NewsFlow.Domain.Entities
 			Added = added;
 		}
 
-		private static bool _validateFeedLink(string link)
-		{
-			string pattern = @"^(https?://)([\w-]+(\.[\w-]+)+)(/[\w- ./?%&=]*)?$";
-            return Regex.IsMatch(link, pattern);
-        }
-
 		public static Feed Create(
             string name,
             string link,
@@ -40,18 +34,10 @@ namespace NewsFlow.Domain.Entities
             Guid id = new Guid(),
 			DateTime? added = null)
 		{
-			bool isLinkValid = _validateFeedLink(link);
-
 			if (name.Length == 0)
 			{
                 throw new InvalidFeedNameException(
                     $"Name can not be empty");
-            }
-
-			if (!isLinkValid)
-			{
-				throw new InvalidFeedLinkException(
-					$"{link} is invalid, please use link with http/https://");
             }
 
 			return new Feed(id, name, link, description, added);
