@@ -216,9 +216,16 @@ input[type="text"][name="daterange"] {
 }
 
 .pubinfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-star;
+}
+
+.pubinfo p {
     text-transform: uppercase;
     color: #18AEB8;
-    font-size: 0.8rem
+    font-size: 0.8rem;
+    margin-right: 0.2rem;
 }
 
 .article-categories {
