@@ -39,43 +39,44 @@ namespace NewsFlow.Application.Mapping
 
         private string ParseArticleContent(SyndicationItem item)
         {
-            string itemContent;
 
-            if (SummaryExists(item))
+            FeedItemElement summary = TryGetSummary(item);
+            if (summary.ElementExists)
             {
-                itemContent = item.Summary.Text;
+                return summary.ElementContents;
             }
-            else if (DescriptionExists(item))
+
+            FeedItemElement description = TryGetDescription(item);
+            if (description.ElementExists)
             {
-                itemContent = item.ElementExtensions.ReadElementExtensions<string>(
-                "description", "http://www.w3.org/2005/Atom")[0];
+                return description.ElementContents;
             }
-            else if (ContentExists(item))
+
+            FeedItemElement content = TryGetContent(item);
+            if (content.ElementExists)
             {
-                var content = (TextSyndicationContent)item.Content;
-                string contentText = content.Text;
-                itemContent = MakeArticleSummary(contentText);
+                return content.ElementContents;
             }
+
             else
             {
-                itemContent = " ";
+                return " ";
             }
-            return itemContent;
         }
 
-        private bool SummaryExists(SyndicationItem item)
+        private FeedItemElement TryGetSummary(SyndicationItem item)
         {
             try
             {
-                string summaryText = item.Summary.Text;
-                return true;
+                return FeedItemElement.Create(
+                    true, item.Summary.Text);
             }
             catch (Exception)
             {
-                return false;
+                return FeedItemElement.Create(false);
             }
         }
-        private bool DescriptionExists(SyndicationItem item)
+        private FeedItemElement TryGetDescription(SyndicationItem item)
         {
             try
             {
@@ -83,31 +84,34 @@ namespace NewsFlow.Application.Mapping
                 "description", "http://www.w3.org/2005/Atom");
                 if (description.Count > 0)
                 {
-                    return true;
+                    string content = item.ElementExtensions.ReadElementExtensions<string>(
+                        "description", "http://www.w3.org/2005/Atom")[0];
+                    return FeedItemElement.Create(true, content);
                 }
-                return false;
+                return FeedItemElement.Create(false);
             }
             catch (Exception)
             {
-                return false;
+                return FeedItemElement.Create(false);
             }
         }
 
-        private bool ContentExists(SyndicationItem item)
+        private FeedItemElement TryGetContent(SyndicationItem item)
         {
             try
             {
                 var content = (TextSyndicationContent)item.Content;
                 var contentText = content.Text;
+                var summary = MakeArticleSummary(contentText);
                 if (contentText.Length > 0)
                 {
-                    return true;
+                    return FeedItemElement.Create(true, summary);
                 }
-                return false;
+                return FeedItemElement.Create(false);
             }
             catch (Exception)
             {
-                return false;
+                return FeedItemElement.Create(false);
             }
         }
 
