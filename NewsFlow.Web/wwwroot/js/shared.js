@@ -22,7 +22,35 @@ async function addFeed() {
         status.innerHTML = "Feed added successfully."
         location.reload();
     }
+}
 
+async function deleteFeeds(feeds) {
+    var response = await fetch('/api/feeds', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            feeds
+        })
+    });
+    if (!response.ok) {
+        alert(response.text)
+    }
+}
+
+async function deleteFeeds(feeds) {
+    var response = await fetch('/api/feeds', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(feeds)
+    });
+
+    if (!response.ok) {
+        alert(response.text)
+    }
 }
 
 function initSharedScripts() {
@@ -30,6 +58,7 @@ function initSharedScripts() {
     var addButton = document.querySelector("#btn-modal-add-feed");
     console.log(addButton);
     addButton.addEventListener('click', addFeed);
+    
 };
 
 

@@ -256,17 +256,17 @@ input[type="text"][name="daterange"] {
     color: white;
 }
 
-.btn-unsubscribe {
+#btn-unsubscribe {
     background-color: #B22222;
     color: white;
 }
 
-.btn-unsubscribe:active {
+#btn-unsubscribe:active {
     background-color: #B22222;
     color: white;
 }
 
-.btn-unsubscribe:hover {
+#btn-unsubscribe:hover {
     background-color: #800000;
     color: white;
 }

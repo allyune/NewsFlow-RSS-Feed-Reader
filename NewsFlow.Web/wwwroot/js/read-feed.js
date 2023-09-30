@@ -81,11 +81,22 @@ function getFeedId() {
     return lastSegmentParts[0];
 }
 
+async function feedUnsubscribe() {
+    var feedId = getFeedId();
+    var confirmUnsubscribe = window.confirm(
+        "Are you sure you want to unsubscribe from this feed?");
+    if (confirmUnsubscribe) {
+        await deleteFeeds([feedId]);
+        window.location.href = '/';
+    }
+}
+
 function initReadFeed() {
-    console.log("View initialized");
     loadArticles();
-    var reloadButton = document.querySelector(".btn-reload");
+    var reloadButton = document.querySelector('.btn-reload');
     reloadButton.addEventListener('click', reloadArticles);
+    var unsubscribeButton = document.querySelector('#btn-unsubscribe');
+    unsubscribeButton.addEventListener('click', feedUnsubscribe)
 };
 
 
