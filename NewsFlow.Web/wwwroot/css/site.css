@@ -66,6 +66,14 @@ a {
     margin: 5px;
 }
 
+.feed-card {
+    cursor: pointer;
+}
+
+.feed-card:hover {
+    background-color: #ebeced;
+}
+
 .card-body {
     padding: 5px;
 }
@@ -95,6 +103,11 @@ a {
 .card-text {
     font-size: 0.7rem;
     color: var(--bs-body-color);
+}
+
+.card-active {
+    background-color: #ebeced;
+    pointer-events: none;
 }
 
 .feed-buttons-container
@@ -139,13 +152,6 @@ a {
 .btn-teal:hover {
     background-color: #30b6bf;
     color: white;
-}
-
-.feed-card {
-    cursor: pointer;
-}
-.feed-card:hover {
-    background-color: #ebeced;
 }
 
 input[type="text"][name="daterange"] {
@@ -256,17 +262,17 @@ input[type="text"][name="daterange"] {
     color: white;
 }
 
-.btn-unsubscribe {
+#btn-unsubscribe {
     background-color: #B22222;
     color: white;
 }
 
-.btn-unsubscribe:active {
+#btn-unsubscribe:active {
     background-color: #B22222;
     color: white;
 }
 
-.btn-unsubscribe:hover {
+#btn-unsubscribe:hover {
     background-color: #800000;
     color: white;
 }

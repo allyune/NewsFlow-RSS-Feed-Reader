@@ -1,5 +1,4 @@
-﻿
-async function addFeed() {
+﻿async function addFeed() {
     console.log("Adding a feed")
     const newFeedName = document.querySelector('#new-feed-name').value;
     const newFeedLink = document.querySelector('#new-feed-link').value;
@@ -22,13 +21,11 @@ async function addFeed() {
         status.innerHTML = "Feed added successfully."
         location.reload();
     }
-
 }
 
 function initSharedScripts() {
-    console.log("Shared scripts initialized");
-    var addButton = document.querySelector("#btn-modal-add-feed");
-    console.log(addButton);
+    console.log('Shared scripts initialized');
+    var addButton = document.querySelector('#btn-modal-add-feed');
     addButton.addEventListener('click', addFeed);
 };
 

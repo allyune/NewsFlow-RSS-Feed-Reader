@@ -1,5 +1,5 @@
-﻿var loadingContainer = document.querySelector('.loading-container');
-var articleContainer = document.querySelector('.articles-container');
+﻿const loadingContainer = document.querySelector('.loading-container');
+const articleContainer = document.querySelector('.articles-container');
 
 async function reloadArticles() {
     articleContainer.classList.add('visibility-none')
@@ -10,24 +10,28 @@ async function reloadArticles() {
 async function loadArticles() {
     try {
         const feedId = getFeedId();
-        const data = await fetchArticles(feedId);
-        displayArticles(data);
+        const response = await fetch(`/api/feeds/${feedId}/articles`);
+        if (!response.ok) {
+            if (response.status === 400 || response.status === 404) {
+                articleContainer.innerHTML = 'Feed not found'
+                loadingContainer.classList.add('visibility-none');
+                articleContainer.classList.remove('visibility-none');
+            } else {
+                throw new Error(`Unexpected response: ${data.status} ${data.statusText}`);
+            }
+        }
+        else {
+            var data = await response.json()
+            displayArticles(data.value);
+        }
     } catch (error) {
         handleLoadError(error);
     }
 }
 
-async function fetchArticles(feedId) {
-    const response = await fetch(`/api/feeds/${feedId}/articles`);
-    if (!response.ok) {
-        throw new Error('Bad response from API');
-    }
-    return await response.json();
-}
-
 function displayArticles(data) {
     articleContainer.innerHTML = ' ';
-    for (const article of data.value) {
+    for (const article of data) {
         const div = createArticleElement(article);
         articleContainer.appendChild(div);
     }
@@ -81,11 +85,36 @@ function getFeedId() {
     return lastSegmentParts[0];
 }
 
+async function deleteFeeds(feeds) {
+    var response = await fetch('/api/feeds', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(feeds)
+    });
+
+    if (!response.ok) {
+        alert(response.text)
+    }
+}
+
+async function feedUnsubscribe() {
+    var feedId = getFeedId();
+    var confirmUnsubscribe = window.confirm(
+        "Are you sure you want to unsubscribe from this feed?");
+    if (confirmUnsubscribe) {
+        await deleteFeeds([feedId]);
+        window.location.href = '/';
+    }
+}
+
 function initReadFeed() {
-    console.log("View initialized");
     loadArticles();
-    var reloadButton = document.querySelector(".btn-reload");
+    var reloadButton = document.querySelector('.btn-reload');
     reloadButton.addEventListener('click', reloadArticles);
+    var unsubscribeButton = document.querySelector('#btn-unsubscribe');
+    unsubscribeButton.addEventListener('click', feedUnsubscribe)
 };
 
 

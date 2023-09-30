@@ -41,4 +41,7 @@
     <Folder Include="ViewComponents\" />
     <Folder Include="Views\Feeds\Components\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\js\feedreader.js" />
+  </ItemGroup>
 </Project>
