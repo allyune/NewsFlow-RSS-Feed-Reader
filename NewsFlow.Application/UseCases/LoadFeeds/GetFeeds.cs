@@ -8,6 +8,7 @@ using NewsFlow.Domain.Entities;
 using NewsFlow.Application.Mapping;
 using System.Runtime.Serialization;
 using NewsFlow.Application.UseCases.Helpers;
+using NewsFlow.Domain.Entities;
 
 namespace NewsFlow.Application.UseCases.LoadFeeds
 {
@@ -62,8 +63,8 @@ namespace NewsFlow.Application.UseCases.LoadFeeds
             {
                 feed = _parseFeedHelpers.GetAtomFeed(reader);
             }
-            var items = feed.Items.ToList();
 
+            var items = feed.Items.ToList();
             var articles = items.Select(
                 _mapper.FeedItemToArticle)
                 .ToList();

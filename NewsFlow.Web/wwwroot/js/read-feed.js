@@ -71,11 +71,19 @@ function getFeedId() {
     return lastSegmentParts[0];
 }
 
+function showAddFeedModal() {
+    console.log("Clicked on add feed button")
+    var addFeedModal = document.getElementById('add-feed-modal');
+    addFeedModal.modal('show');
+}
+
 function initReadFeed() {
     console.log("View initialized");
     loadArticles();
     var reloadButton = document.querySelector(".btn-reload");
     reloadButton.addEventListener('click', loadArticles);
+    var addFeedButton = document.querySelector(".btn-add-feed");
+    addFeedButton.addEventListener('click', showAddFeedModal)
 };
 
 
