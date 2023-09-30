@@ -118,31 +118,39 @@ namespace NewsFlow.Web.Controllers
             }
         }
 
-        [Route("api/[controller]/{feedId}")]
+        [Route("api/[controller]")]
         [HttpDelete]
-        public async Task<IActionResult> DeleteFeed(string feedId)
+        public async Task<IActionResult> DeleteFeed([FromBody] string[] ids)
         {
-            Guid id;
-            bool isGuid = Guid.TryParse(feedId, out id);
-            if (!isGuid)
+            Console.WriteLine("CONTROLLER");
+            Console.WriteLine(ids[0]);
+            foreach (var feedId in ids)
             {
-                return BadRequest("Wrong Feed Id format.");
+                Guid id;
+                bool isGuid = Guid.TryParse(feedId, out id);
+                Console.WriteLine(feedId);
+                Console.WriteLine(id);
+                if (!isGuid)
+                {
+                    return BadRequest("Wrong Feed Id format.");
+                }
+                try
+                {
+                    await _deleteFeeds.DeleteFeed(id);
+                }
+                catch (FeedNotFoundException ex)
+                {
+                    return NotFound(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Error when deleting Feed id {id}: {ex.Message}");
+                    return StatusCode(
+                        500, "Error occured when deleting the Feed. Please try again");
+                }
             }
-            try
-            {
-                await _deleteFeeds.DeleteFeed(id);
-                return Ok();
-            }
-            catch (FeedNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error when deleting Feed id {id}: {ex.Message}");
-                return StatusCode(
-                    500, "Error occured when deleting the Feed. Please try again");
-            }
+
+            return Ok();
         }
 
     }
