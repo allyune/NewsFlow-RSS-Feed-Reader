@@ -82,6 +82,7 @@ a {
     margin-right: 1rem;
     margin-bottom: 0.2rem;
     text-transform: uppercase;
+    color: var(--bs-body-color);
 }
 
 .card-link {
@@ -93,6 +94,7 @@ a {
 
 .card-text {
     font-size: 0.7rem;
+    color: var(--bs-body-color);
 }
 
 .feed-buttons-container
@@ -158,6 +160,8 @@ input[type="text"][name="daterange"] {
 
 .leftside {
     width: 30%;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .row:after {
@@ -181,6 +185,8 @@ input[type="text"][name="daterange"] {
     display: flex;
     flex-direction: column;
     width: 70%;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .articles-container div {

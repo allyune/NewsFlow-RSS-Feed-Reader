@@ -28,14 +28,17 @@
     {
         @foreach (var feed in Model)
         {
+            
             <div class="feed-card card w-20">
-                <div class="card-body">
-                    <div class="card-head">
-                        <h6 class="card-title">@feed.Name</h6>
-                        <p class="card-link">@feed.Link</p>
+                <a href="/feeds/@feed.Id">
+                    <div class="card-body">
+                        <div class="card-head">
+                            <h6 class="card-title">@feed.Name</h6>
+                            <p class="card-link">@feed.Link</p>
+                        </div>
+                        <p class="card-text">@feed.Description</p>
                     </div>
-                    <p class="card-text">@feed.Description</p>
-                </div>
+                </a>
             </div>
         }
     }

@@ -1,4 +1,13 @@
-﻿async function loadArticles() {
+﻿async function reloadArticles() {
+    const loadingContainer = document.querySelector('.loading-container');
+    const articleContainer = document.querySelector('.articles-container');
+    loadingContainer.classList.toggle('visibility-none');
+    articleContainer.classList.toggle('visibility-none');
+    loadArticles();
+    
+}
+
+async function loadArticles() {
     try {
         const feedId = getFeedId();
         const data = await fetchArticles(feedId);
@@ -17,12 +26,15 @@ async function fetchArticles(feedId) {
 }
 
 function displayArticles(data) {
+    const loadingContainer = document.querySelector('.loading-container');
     const articleContainer = document.querySelector('.articles-container');
     articleContainer.innerHTML = ' ';
     for (const article of data.value) {
         const div = createArticleElement(article);
         articleContainer.appendChild(div);
     }
+    loadingContainer.classList.toggle('visibility-none');
+    articleContainer.classList.toggle('visibility-none');
 }
 
 function createArticleElement(article) {
@@ -71,19 +83,11 @@ function getFeedId() {
     return lastSegmentParts[0];
 }
 
-function showAddFeedModal() {
-    console.log("Clicked on add feed button")
-    var addFeedModal = document.getElementById('add-feed-modal');
-    addFeedModal.modal('show');
-}
-
 function initReadFeed() {
     console.log("View initialized");
     loadArticles();
     var reloadButton = document.querySelector(".btn-reload");
     reloadButton.addEventListener('click', loadArticles);
-    var addFeedButton = document.querySelector(".btn-add-feed");
-    addFeedButton.addEventListener('click', showAddFeedModal)
 };
 
 
