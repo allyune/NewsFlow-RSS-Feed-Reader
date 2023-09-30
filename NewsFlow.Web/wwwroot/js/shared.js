@@ -1,5 +1,4 @@
-﻿
-async function addFeed() {
+﻿async function addFeed() {
     console.log("Adding a feed")
     const newFeedName = document.querySelector('#new-feed-name').value;
     const newFeedLink = document.querySelector('#new-feed-link').value;
@@ -24,41 +23,10 @@ async function addFeed() {
     }
 }
 
-async function deleteFeeds(feeds) {
-    var response = await fetch('/api/feeds', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            feeds
-        })
-    });
-    if (!response.ok) {
-        alert(response.text)
-    }
-}
-
-async function deleteFeeds(feeds) {
-    var response = await fetch('/api/feeds', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(feeds)
-    });
-
-    if (!response.ok) {
-        alert(response.text)
-    }
-}
-
 function initSharedScripts() {
-    console.log("Shared scripts initialized");
-    var addButton = document.querySelector("#btn-modal-add-feed");
-    console.log(addButton);
+    console.log('Shared scripts initialized');
+    var addButton = document.querySelector('#btn-modal-add-feed');
     addButton.addEventListener('click', addFeed);
-    
 };
 
 

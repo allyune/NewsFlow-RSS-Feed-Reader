@@ -85,6 +85,20 @@ function getFeedId() {
     return lastSegmentParts[0];
 }
 
+async function deleteFeeds(feeds) {
+    var response = await fetch('/api/feeds', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(feeds)
+    });
+
+    if (!response.ok) {
+        alert(response.text)
+    }
+}
+
 async function feedUnsubscribe() {
     var feedId = getFeedId();
     var confirmUnsubscribe = window.confirm(
