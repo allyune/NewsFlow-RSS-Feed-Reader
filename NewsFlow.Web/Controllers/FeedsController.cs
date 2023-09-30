@@ -39,31 +39,44 @@ namespace NewsFlow.Web.Controllers
         public async Task<IActionResult> ListFeeds()
         {
             List<Models.Feed> allFeeds = await _getFeeds.ListFeeds();
-            List<FeedMetadataViewModel> metadata = allFeeds.Select(
-                _mapper.FeedMetadataToViewModel).ToList();
-            return View(metadata);
+
+            if (allFeeds.Count == 0)
+            {
+                List<FeedMetadataViewModel> metadata = allFeeds.Select(
+                    _mapper.FeedMetadataToViewModel).ToList();
+                return View(metadata);
+            }
+            return RedirectToAction("ReadFeed", new { feedId = allFeeds.First().Id });
         }
+
+        //[Route("[controller]/{feedId}")]
+        //[HttpGet]
+        //public async Task<IActionResult> ReadFeed(Guid feedId)
+        //{
+        //    try
+        //    {
+        //        Models.Feed feed = await _getFeeds.GetFeed(feedId);
+        //        FeedViewModel feedData = _mapper.FeedToViewModel(feed);
+        //        return View(feedData);
+        //    }
+        //    catch (FeedNotFoundException ex)
+        //    {
+        //        return NotFound(ex.Message);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError($"Error when fetching Feed id {feedId}, {ex.Message}");
+        //        return StatusCode(
+        //            500, "Error occured when fetching the Feed. Please try again");
+        //    }
+        //}
+
 
         [Route("[controller]/{feedId}")]
         [HttpGet]
-        public async Task<IActionResult> ReadFeed(Guid feedId)
+        public IActionResult ReadFeed(Guid feedId)
         {
-            try
-            {
-                Models.Feed feed = await _getFeeds.GetFeed(feedId);
-                FeedViewModel feedData = _mapper.FeedToViewModel(feed);
-                return View(feedData);
-            }
-            catch (FeedNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error when fetching Feed id {feedId}, {ex.Message}");
-                return StatusCode(
-                    500, "Error occured when fetching the Feed. Please try again");
-            }
+            return View();
         }
 
         [Route("api/[controller]/{feedId}/articles")]
@@ -76,8 +89,20 @@ namespace NewsFlow.Web.Controllers
             {
                 return BadRequest("Wrong Feed Id format.");
             }
-            List<Article> artcles = await _getFeeds.LoadArticles(id);
-            return Ok(Json(artcles));
+            try
+            {
+                List<Article> artcles = await _getFeeds.LoadArticles(id);
+                return Ok(Json(artcles));
+            }
+            catch(FeedNotFoundException ex)
+            {
+                return StatusCode(404, ex.Message);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Error loading feed {feedId}: {ex.Message}");
+                return StatusCode(500, "Error loading feed, please reload");
+            }
         }
 
         [Route("api/[controller]")]
