@@ -1,10 +1,10 @@
-﻿async function reloadArticles() {
-    const loadingContainer = document.querySelector('.loading-container');
-    const articleContainer = document.querySelector('.articles-container');
-    loadingContainer.classList.toggle('visibility-none');
-    articleContainer.classList.toggle('visibility-none');
+﻿var loadingContainer = document.querySelector('.loading-container');
+var articleContainer = document.querySelector('.articles-container');
+
+async function reloadArticles() {
+    articleContainer.classList.add('visibility-none')
+    loadingContainer.classList.remove('visibility-none');
     loadArticles();
-    
 }
 
 async function loadArticles() {
@@ -26,15 +26,13 @@ async function fetchArticles(feedId) {
 }
 
 function displayArticles(data) {
-    const loadingContainer = document.querySelector('.loading-container');
-    const articleContainer = document.querySelector('.articles-container');
     articleContainer.innerHTML = ' ';
     for (const article of data.value) {
         const div = createArticleElement(article);
         articleContainer.appendChild(div);
     }
-    loadingContainer.classList.toggle('visibility-none');
-    articleContainer.classList.toggle('visibility-none');
+    loadingContainer.classList.add('visibility-none');
+    articleContainer.classList.remove('visibility-none');
 }
 
 function createArticleElement(article) {
@@ -87,7 +85,7 @@ function initReadFeed() {
     console.log("View initialized");
     loadArticles();
     var reloadButton = document.querySelector(".btn-reload");
-    reloadButton.addEventListener('click', loadArticles);
+    reloadButton.addEventListener('click', reloadArticles);
 };
 
 
