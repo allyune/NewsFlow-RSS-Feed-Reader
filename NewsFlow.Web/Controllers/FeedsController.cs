@@ -49,29 +49,6 @@ namespace NewsFlow.Web.Controllers
             return RedirectToAction("ReadFeed", new { feedId = allFeeds.First().Id });
         }
 
-        //[Route("[controller]/{feedId}")]
-        //[HttpGet]
-        //public async Task<IActionResult> ReadFeed(Guid feedId)
-        //{
-        //    try
-        //    {
-        //        Models.Feed feed = await _getFeeds.GetFeed(feedId);
-        //        FeedViewModel feedData = _mapper.FeedToViewModel(feed);
-        //        return View(feedData);
-        //    }
-        //    catch (FeedNotFoundException ex)
-        //    {
-        //        return NotFound(ex.Message);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError($"Error when fetching Feed id {feedId}, {ex.Message}");
-        //        return StatusCode(
-        //            500, "Error occured when fetching the Feed. Please try again");
-        //    }
-        //}
-
-
         [Route("[controller]/{feedId}")]
         [HttpGet]
         public IActionResult ReadFeed(Guid feedId)
@@ -111,7 +88,7 @@ namespace NewsFlow.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest("Invalid name or link");
             }
             try
             {

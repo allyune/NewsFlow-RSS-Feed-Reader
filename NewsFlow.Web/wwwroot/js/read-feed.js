@@ -7,10 +7,36 @@ async function reloadArticles() {
     loadArticles();
 }
 
+$(function () {
+    $('#datepicker').daterangepicker({
+        opens: 'left'
+    }, function (start, end, label) {
+        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        filterArticlesByDate(start, end);
+    });
+});
+
+function filterArticlesByDate(startDate, endDate) {
+    const articlesContainer = document.querySelector('.articles-container');
+    const articles = articlesContainer.querySelectorAll('.article');
+
+    articles.forEach(article => {
+        var publishDateElement = article.querySelector('.pubdate');
+        var publishDateStr = publishDateElement.innerHTML;
+        var publishDate = new Date(publishDateStr);
+
+        if (publishDate >= startDate && publishDate <= endDate) {
+            article.style.display = 'block';
+        } else {
+            article.style.display = 'none';
+        }
+    });
+}
+
 async function loadArticles() {
     try {
-        const feedId = getFeedId();
-        const response = await fetch(`/api/feeds/${feedId}/articles`);
+        var feedId = getFeedId();
+        var response = await fetch(`/api/feeds/${feedId}/articles`);
         if (!response.ok) {
             if (response.status === 400 || response.status === 404) {
                 articleContainer.innerHTML = 'Feed not found'
@@ -41,6 +67,7 @@ function displayArticles(data) {
 
 function createArticleElement(article) {
     var div = document.createElement('div');
+    div.classList.add('article');
     //title
     var title = document.createElement('a');
     title.href = article.links[0];
@@ -48,11 +75,15 @@ function createArticleElement(article) {
     title.innerHTML = article.title;
     div.appendChild(title);
     //published info
-    var published = document.createElement('p');
-    published.classList.add('pubinfo')
-    var author = article.authors[0];
-    var pubdate = article.pubDate;
-    published.innerHTML = `Published: ${pubdate} by ${author}`
+    var published = document.createElement('div');
+    published.classList.add('pubinfo');
+    var pubdate = document.createElement('p');
+    pubdate.classList.add('pubdate');
+    pubdate.innerHTML = article.pubDate;
+    published.appendChild(pubdate);
+    var author = document.createElement('p');
+    author.innerHTML = `by ${article.authors[0]}`;
+    published.appendChild(author);
     div.appendChild(published);
     //summary
     var summary = document.createElement('p');
