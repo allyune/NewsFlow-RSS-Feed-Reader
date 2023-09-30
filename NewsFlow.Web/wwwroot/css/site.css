@@ -35,6 +35,10 @@ button {
   outline: none;
 }
 
+a {
+    text-decoration: none;
+}
+
 .navbar {
     margin: 0px !important;
     padding: 0px !important;
@@ -142,10 +146,6 @@ button {
     background-color: #ebeced;
 }
 
-#add-feed-modal {
-    display:none;
-}
-
 input[type="text"][name="daterange"] {
     width: auto;
     padding: 0.5rem;
@@ -187,15 +187,20 @@ input[type="text"][name="daterange"] {
     margin-bottom: 1rem;
 }
 
-.articles-container a {
+.articles-container div > a {
     font-size: 1.3rem;
     margin-bottom: 3rem;
     text-decoration: none;
     color: #464EA3;
 }
 
-.articles-container a:hover {
+.articles-container div > a:hover {
     color: #545cb3;
+}
+
+.articles-container img {
+    max-width: 400px;
+    max-height: 300px;
 }
 
 .pubinfo {
@@ -260,3 +265,10 @@ input[type="text"][name="daterange"] {
     color: white;
 }
 
+.visibility-none {
+    display: none;
+}
+
+#modal-status {
+    display: block;
+}

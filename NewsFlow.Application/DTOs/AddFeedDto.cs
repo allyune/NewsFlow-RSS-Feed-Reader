@@ -10,12 +10,12 @@ namespace NewsFlow.Application.DTOs
 			ErrorMessage = "RSS Feed name must contain at least one character"),
 		 MaxLength(200,
 			ErrorMessage = "RSS Feed name max length is 200 characters"),
-		 RegularExpression(@"^[a-zA-Z0-9_]+$",
+		 RegularExpression(@"^[a-zA-Z0-9_ -/!?]+$",
 			ErrorMessage = "Rss Feed name can't contain any special characters")]
         public string Name { get; private set; }
 
         [RegularExpression(
-			@"^(https?://)([\w-]+(\.[\w-]+)+)(/[\w- ./?%&=]*)?$",
+            @"^(https?://)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(/[\w.-]*)?$",
 			ErrorMessage = "Invalid email, make sure that link starts with http/https://")]
         public string Link { get; private set; }
 

@@ -8,6 +8,7 @@ using NewsFlow.Application.DTOs;
 using NewsFlow.Application.UseCases.Helpers;
 using NewsFlow.Data.Repositories.FeedRepository;
 using NewsFlow.Domain.Entities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using Models = NewsFlow.Data.Models;
 
 namespace NewsFlow.Application.UseCases.AddFeeds
@@ -28,42 +29,27 @@ namespace NewsFlow.Application.UseCases.AddFeeds
             _parseFeedHelpers = helpers;
         }
 
-        private string CleanUrl(string url)
-        {
-            string pattern = @"^(https?://)?(www\.)?|\/$";
-            return Regex.Replace(url, pattern, string.Empty);
-            
-        }
-
-        private async Task<bool> CheckLinkExists(string link)
-        {
-        string cleanLink = CleanUrl(link);
-           return await _feedRepository.CheckExists(
-               f => f.Link.Contains(cleanLink.ToLower()));
-        }
-
         public async Task AddFeed(AddFeedDto data)
         {
-            string name = data.Name;
-            string link = data.Link.ToLower();
+            string link = FormatFeedLink(data.Link);
             bool isLinkNotUnique = await CheckLinkExists(link);
             if(isLinkNotUnique)
             {
                 throw new LinkNotUniqueException(
                     "RSS Feed with this URL has already been added");
             }
-            
+
             using var reader = XmlReader.Create(link);
             SyndicationFeed feed;
             try
             {
                 feed = _parseFeedHelpers.GetRss2Feed(reader);
             }
-            catch(XmlException)
+            catch (XmlException)
             {
                 feed = _parseFeedHelpers.GetAtomFeed(reader);
             }
-
+            string name = data.Name;
             string description = GetFeedDescription(link, feed);
             Feed newFeed = Feed.Create(name, link, description);
             Models.Feed feedModel = Models.Feed.Create(
@@ -89,6 +75,29 @@ namespace NewsFlow.Application.UseCases.AddFeeds
             return description;
         }
 
+        private string CleanUrl(string url)
+        {
+            string pattern = @"^(https?://)?(www\.)?|\/$";
+            return Regex.Replace(url, pattern, string.Empty);
+
+        }
+
+        private async Task<bool> CheckLinkExists(string link)
+        {
+            string cleanLink = CleanUrl(link);
+            return await _feedRepository.CheckExists(
+                f => f.Link.Contains(cleanLink.ToLower()));
+        }
+
+        private string FormatFeedLink(string link)
+        {
+            link = link.ToLower();
+            if (!link.StartsWith("http://"))
+            {
+                link = "http://" + link;
+            }
+            return link;
+        }
     }
-    }
+ }
 
