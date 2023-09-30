@@ -1,4 +1,13 @@
-﻿async function loadArticles() {
+﻿var loadingContainer = document.querySelector('.loading-container');
+var articleContainer = document.querySelector('.articles-container');
+
+async function reloadArticles() {
+    articleContainer.classList.add('visibility-none')
+    loadingContainer.classList.remove('visibility-none');
+    loadArticles();
+}
+
+async function loadArticles() {
     try {
         const feedId = getFeedId();
         const data = await fetchArticles(feedId);
@@ -17,12 +26,13 @@ async function fetchArticles(feedId) {
 }
 
 function displayArticles(data) {
-    const articleContainer = document.querySelector('.articles-container');
     articleContainer.innerHTML = ' ';
     for (const article of data.value) {
         const div = createArticleElement(article);
         articleContainer.appendChild(div);
     }
+    loadingContainer.classList.add('visibility-none');
+    articleContainer.classList.remove('visibility-none');
 }
 
 function createArticleElement(article) {
@@ -75,7 +85,7 @@ function initReadFeed() {
     console.log("View initialized");
     loadArticles();
     var reloadButton = document.querySelector(".btn-reload");
-    reloadButton.addEventListener('click', loadArticles);
+    reloadButton.addEventListener('click', reloadArticles);
 };
 
 

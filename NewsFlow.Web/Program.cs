@@ -2,6 +2,7 @@
 using NewsFlow.Application.Mapping;
 using NewsFlow.Application.UseCases.AddFeeds;
 using NewsFlow.Application.UseCases.DeleteFeeds;
+using NewsFlow.Application.UseCases.Helpers;
 using NewsFlow.Application.UseCases.LoadFeeds;
 using NewsFlow.Data.Infrastructure;
 using NewsFlow.Data.Repositories.FeedRepository;
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IAddFeeds, AddFeeds>();
 builder.Services.AddScoped<IDeleteFeeds, DeleteFeeds>();
 builder.Services.AddScoped<IFeedMapper, FeedMapper>();
 builder.Services.AddScoped<IArticleMapper, ArticleMapper>();
+builder.Services.AddScoped<IParseFeedHelpers, ParseFeedHelpers>();
 
 var app = builder.Build();
 

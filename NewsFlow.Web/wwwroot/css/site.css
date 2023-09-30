@@ -35,6 +35,10 @@ button {
   outline: none;
 }
 
+a {
+    text-decoration: none;
+}
+
 .navbar {
     margin: 0px !important;
     padding: 0px !important;
@@ -78,6 +82,7 @@ button {
     margin-right: 1rem;
     margin-bottom: 0.2rem;
     text-transform: uppercase;
+    color: var(--bs-body-color);
 }
 
 .card-link {
@@ -89,6 +94,7 @@ button {
 
 .card-text {
     font-size: 0.7rem;
+    color: var(--bs-body-color);
 }
 
 .feed-buttons-container
@@ -142,10 +148,6 @@ button {
     background-color: #ebeced;
 }
 
-#add-feed-modal {
-    display:none;
-}
-
 input[type="text"][name="daterange"] {
     width: auto;
     padding: 0.5rem;
@@ -158,6 +160,8 @@ input[type="text"][name="daterange"] {
 
 .leftside {
     width: 30%;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .row:after {
@@ -181,21 +185,28 @@ input[type="text"][name="daterange"] {
     display: flex;
     flex-direction: column;
     width: 70%;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .articles-container div {
     margin-bottom: 1rem;
 }
 
-.articles-container a {
+.articles-container div > a {
     font-size: 1.3rem;
     margin-bottom: 3rem;
     text-decoration: none;
     color: #464EA3;
 }
 
-.articles-container a:hover {
+.articles-container div > a:hover {
     color: #545cb3;
+}
+
+.articles-container img {
+    max-width: 400px;
+    max-height: 300px;
 }
 
 .pubinfo {
@@ -260,3 +271,10 @@ input[type="text"][name="daterange"] {
     color: white;
 }
 
+.visibility-none {
+    display: none;
+}
+
+#modal-status {
+    display: block;
+}

@@ -31,8 +31,12 @@ namespace NewsFlow.Web.Mapping.FeedMapping
 
         public FeedMetadataViewModel FeedMetadataToViewModel(Feed feedModel)
         {
-            return FeedMetadataViewModel.Create(
-                feedModel.Name, feedModel.Description, GetRootDomain(feedModel.Link));
+            Console.WriteLine("ViewModel ID");
+            Console.WriteLine(feedModel.Id.ToString());
+            var viewModel =  FeedMetadataViewModel.Create(
+               feedModel.Id.ToString(), feedModel.Name, feedModel.Description, GetRootDomain(feedModel.Link));
+            Console.WriteLine(viewModel.Id);
+            return viewModel;
         }
 
         public FeedViewModel FeedToViewModel(Feed feedModel)

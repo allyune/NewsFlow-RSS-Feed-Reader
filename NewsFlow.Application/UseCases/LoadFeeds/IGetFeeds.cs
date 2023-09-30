@@ -9,7 +9,7 @@ namespace NewsFlow.Application.UseCases.LoadFeeds
     {
         public Task<List<Models.Feed>> ListFeeds();
         public Task<Models.Feed> GetFeed(Guid id);
-        Task<List<Article>> LoadArticles(Guid feedId);
+        public Task<List<Article>> LoadArticles(Guid feedId);
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 using Microsoft.AspNetCore.Mvc;
 using NewsFlow.Application.DTOs;
 using NewsFlow.Application.UseCases;
@@ -100,6 +101,14 @@ namespace NewsFlow.Web.Controllers
             {
                 _logger.LogWarning($"Http error when accessing URL {data.Link}: {ex.Message}");
                 return BadRequest("Rss Feed URL is unreachanble.");
+            }
+            catch (XmlException ex)
+            {
+                {
+                    _logger.LogError($"Xml when adding RSS feed {data.Link}: {ex.Message}");
+                    return StatusCode(
+                        500, "Can't read this feed.");
+                }
             }
             catch (Exception ex)
             {

@@ -10,7 +10,7 @@ autom4te.cache/
 *.tar.gz
 tarballs/
 test-results/
-
+appsettings.json
 # Mac bundle stuff
 *.dmg
 *.app
@@ -20,6 +20,7 @@ test-results/
 .DS_Store
 .AppleDouble
 .LSOverride
+NewsFlow.Web/appsettings.json
 
 # Icon must end with two \r
 Icon
