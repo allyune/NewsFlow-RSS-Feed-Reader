@@ -1,5 +1,7 @@
 # NewsFlow - Minimalistic RSS Feed Reader
-![.NET](https://github.com/allyune/NewsFlow-RSS-Feed-Reader/actions/workflows/dotnet.yml/badge.svg)
+![.NET](https://github.com/allyune/NewsFlow-RSS-Feed-Reader/actions/workflows/dotnet.yml/badge.svg)\
+\
+Deployed to: https://newsflow-rss.azurewebsites.net/
 
 ## Technologies
 ![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
@@ -16,8 +18,8 @@
  - Adding RSS feeds;
  - Listing RSS feeds with metadata;
  - Unsubscribing from the RSS feed;
- - Managing RSS feeds (bulk unsubscribe);
  - Displaying articles;
  - Reloading articles;
  - Filtering articles by publication date;
+ - Filtering/searching articles by title;
 
