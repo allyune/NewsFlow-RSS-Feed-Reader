@@ -40,6 +40,7 @@ namespace NewsFlow.Application.UseCases.AddFeeds
             }
 
             using var reader = XmlReader.Create(link);
+            Console.WriteLine("READER CREATED");
             SyndicationFeed feed;
             try
             {
@@ -92,7 +93,7 @@ namespace NewsFlow.Application.UseCases.AddFeeds
         private string FormatFeedLink(string link)
         {
             link = link.ToLower();
-            if (!link.StartsWith("http://"))
+            if (!link.StartsWith("http://") && !link.StartsWith("https://"))
             {
                 link = "http://" + link;
             }

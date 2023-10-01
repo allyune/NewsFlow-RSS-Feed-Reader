@@ -35,6 +35,14 @@ button {
   outline: none;
 }
 
+button:focus {
+    outline: 0;
+}
+
+input:focus {
+    outline: 0;
+}
+
 a {
     text-decoration: none;
 }
@@ -170,6 +178,9 @@ input[type="text"][name="daterange"] {
     overflow-y: auto;
 }
 
+.row {
+    margin-top: 1rem;
+}
 .row:after {
     content: "";
     display: table;
@@ -190,7 +201,7 @@ input[type="text"][name="daterange"] {
 .articles-container {
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 80%;
     max-height: 100vh;
     overflow-y: auto;
 }
@@ -243,6 +254,32 @@ input[type="text"][name="daterange"] {
     background-color: #ededed;
 }
 
+.feed-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-shrink: initial;
+}
+
+.feed-controls > div {
+    margin-right: 2rem;
+}
+
+.article-filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.article-filters > div {
+    margin-right: 1rem;
+}
+
+#article-searchbar {
+    max-width: 10rem;
+}
+
 .feed-control-buttons {
     display: flex;
     flex-direction: row;
@@ -260,8 +297,8 @@ input[type="text"][name="daterange"] {
 }
 
 .btn-reload:active {
-    background-color: #3B7A57;
-    color: white;
+    background-color: #3B7A57!important;
+    color: white!important;
 }
 
 .btn-reload:hover {
@@ -275,8 +312,8 @@ input[type="text"][name="daterange"] {
 }
 
 #btn-unsubscribe:active {
-    background-color: #B22222;
-    color: white;
+    background-color: #B22222!important;
+    color: white!important;
 }
 
 #btn-unsubscribe:hover {

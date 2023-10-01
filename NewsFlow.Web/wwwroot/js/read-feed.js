@@ -70,6 +70,7 @@ function createArticleElement(article) {
     div.classList.add('article');
     //title
     var title = document.createElement('a');
+    title.classList.add('article-title')
     title.href = article.links[0];
     title.target = '_blank';
     title.innerHTML = article.title;
@@ -140,13 +141,34 @@ async function feedUnsubscribe() {
     }
 }
 
+function findArticles(searchText) {
+    var articles = document.querySelectorAll('.article');
+    console.log(articles);
+    for (var article of articles) {
+        var title = article.querySelector('.article-title').textContent.toLowerCase();
+        console.log(title);
+        if (searchText && !title.includes(searchText)) {
+            article.style.display = 'none';
+        } else {
+            article.style.display = '';
+        }
+    }
+};
+
 function initReadFeed() {
     loadArticles();
     var reloadButton = document.querySelector('.btn-reload');
     reloadButton.addEventListener('click', reloadArticles);
     var unsubscribeButton = document.querySelector('#btn-unsubscribe');
-    unsubscribeButton.addEventListener('click', feedUnsubscribe)
-};
+    unsubscribeButton.addEventListener('click', feedUnsubscribe);
+    var searchInput = document.querySelector('#article-search-input');
+    console.log(searchInput);
+    searchInput.addEventListener('input', function () {
+        var searchText = this.value.toLowerCase();
+        console.log(searchText);
+        findArticles(searchText)
+    });
+}
 
 
 window.addEventListener('load', initReadFeed);
