@@ -20,23 +20,54 @@ namespace NewsFlow.Application.Mapping
                     item.Categories.Select(c => c.Name).ToList());
         }
 
+        /// <summary>
+        /// Trying to parse authors from different RSS schemas.
+        /// 1. RSS2.0 author with name
+        /// 2. RSS2.0 author with email
+        /// 3. Atom creator
+        /// 4. Other author field.
+        /// Returns list with "Author" as default value.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         private List<string> ParseAuthors(SyndicationItem item)
         {
-            var authorsDefault = item.Authors.Select(a => a.Name);
-            if (authorsDefault.Count() > 0)
+            var authorsWithName = item.Authors.Select(a => a.Name);
+            if (authorsWithName.Count() > 0 &&
+                !(authorsWithName.First() is null))
             {
-                return authorsDefault.ToList();
+                return authorsWithName.ToList();
+            }
+            var authorsWithEmail = item.Authors.Select(a => a.Email);
+            if (authorsWithEmail.Count() > 0 &&
+                !(authorsWithEmail.First() is null))
+            {
+                return authorsWithEmail.ToList();
             }
             var dcCreators = item.ElementExtensions.ReadElementExtensions<string>(
                 "creator", "http://purl.org/dc/elements/1.1/");
-            if (dcCreators.Count() > 0)
+            if (dcCreators.Count() > 0 &&
+                !(dcCreators.First() is null))
             {
                 return dcCreators.ToList();
             }
+            var authorsCustom = item.ElementExtensions.ReadElementExtensions<string>(
+                "author", "");
+            if (authorsCustom.Count() > 0)
+            {
+                return authorsCustom.ToList();
+            }
 
-            return new List<string>();
+            return new List<string>() { "author" };
         }
 
+        /// <summary>
+        /// Tries to parse article summary from different RSS schema types.
+        /// If summary is not found it is constructed from content.
+        /// Returns empty string as default value.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         private string ParseArticleContent(SyndicationItem item)
         {
 
