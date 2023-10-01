@@ -1,10 +1,16 @@
-﻿@*@model NewsFlow.Web.ViewModels.FeedViewModel*@
+﻿@model NewsFlow.Web.ViewModels.FeedViewModel
 
 @{
     Layout = "_FeedReaderLayout";
     ViewData["Title"] = "NewsFlow: Minimalistic RSS Reader";
 }
 
+@if (ViewData.Model == null)
+ {
+    <h3>Feed not found</h3>
+ }
+ else
+ {
 <div class="feed-header">
     <div class="feed-controls">
 
@@ -41,11 +47,19 @@
             </div>
         </div>
     </div>
-    @*<p class="feed-updated">
+    <p class="feed-updated">
         Last Updated:
-        @Model.LastUpdated.ToShortDateString()
-        @Model.LastUpdated.ToShortTimeString()
-    </p>*@
+        @if (@Model.LastUpdated is not null)
+        {
+
+            @Model.LastUpdated?.ToShortDateString();
+            @Model.LastUpdated?.ToShortTimeString();
+        }
+        else
+        {
+           <span>N/A</span>
+        }
+    </p>
 </div>
 
 <div class="loading-container">
@@ -55,9 +69,10 @@
 <div class="articles-container visibility-none">
 
 </div>
-
+}
 @section Scripts {
     <script src="~/js/read-feed.js"></script>
 }
+
 
 

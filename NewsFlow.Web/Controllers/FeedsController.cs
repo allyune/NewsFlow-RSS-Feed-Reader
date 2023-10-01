@@ -51,9 +51,23 @@ namespace NewsFlow.Web.Controllers
 
         [Route("[controller]/{feedId}")]
         [HttpGet]
-        public IActionResult ReadFeed(Guid feedId)
+        public async Task <IActionResult> ReadFeed(Guid feedId)
         {
-            return View();
+            try
+            {
+                Models.Feed feed = await _getFeeds.GetFeed(feedId);
+                FeedViewModel feedViewModel = _mapper.FeedToViewModel(feed);
+                return View(feedViewModel);
+            }
+            catch (FeedNotFoundException)
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error loading feed {feedId}: {ex.Message}");
+                return StatusCode(500, "Error loading feed, please reload");
+            }
         }
 
         [Route("api/[controller]/{feedId}/articles")]
@@ -150,7 +164,6 @@ namespace NewsFlow.Web.Controllers
 
             return Ok();
         }
-
     }
 }
 
