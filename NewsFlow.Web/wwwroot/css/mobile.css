@@ -102,11 +102,11 @@
     }
 
     .btn-reload {
-        min-width: auto;
+        min-width: fit-content!important;
     }
 
     #btn-unsubscribe {
-        min-width: auto;
+        min-width: fit-content!important;
     }
  
 }
