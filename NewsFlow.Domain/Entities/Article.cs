@@ -12,7 +12,7 @@ namespace NewsFlow.Domain.Entities
         public DateTime PubDate { get; private set; }
         public List<string> Links { get; private set; }
         public List<string> Authors { get; private set; }
-        public List<string> Categories { get; set; }
+        public List<string> Categories { get; private set; }
 
         public Article(
             Guid id,
