@@ -1,0 +1,112 @@
+﻿@media (max-width: 575.98px) {
+
+    .feed-card {
+        padding: 2px!important;
+        margin: 1px!important;
+        margin-bottom: 5px!important;
+    }
+
+    .card-body {
+        padding: 0px;
+    }
+
+    .card-head {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        padding: 0px;
+    }
+
+    .card-title {
+        margin-right: 0!important;
+        margin-bottom: 0.2rem;
+        text-transform: uppercase;
+        color: var(--bs-body-color);
+    }
+
+    .card-title {
+        font-size: 0.7rem;
+    }
+
+    .card-link {
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        margin-bottom: 0.1rem;
+        color: darkgrey;
+    }
+
+    .card-text {
+        font-size: 0.5rem;
+        color: var(--bs-body-color);
+    }
+
+    .btn-teal {
+        background-color: #18AEB8;
+        color: white;
+        font-size: 0.7rem;
+    }
+
+    .btn-teal:active {
+        background-color: #18AEB8 !important;
+        color: white !important;
+        font-size: 0.7rem;
+    }
+
+    .btn-teal:hover {
+        background-color: #30b6bf;
+        color: white;
+        font-size: 0.7rem;
+    }
+
+    .btn-add-feed {
+        min-width: auto;
+    }
+
+    .articles-container {
+        width: 95%!important;
+    }
+
+    .articles-container img {
+        max-width: 90%!important;
+        max-height: 300px!important;
+    }
+
+    .feed-controls {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .feed-controls > div {
+        margin-right: 0;
+        width: 90%;
+        box-sizing: border-box;
+    }
+
+    #article-searchbar {
+        max-width: 100% !important;
+        width: 100%;
+    }
+
+    #datepicker svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .feed-control-buttons > button {
+        margin-right: 1rem;
+        font-size: 0.7rem;
+    }
+
+    .btn-reload {
+        min-width: auto;
+    }
+
+    #btn-unsubscribe {
+        min-width: auto;
+    }
+ 
+}
