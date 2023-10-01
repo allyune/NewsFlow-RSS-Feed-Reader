@@ -11,7 +11,6 @@ $(function () {
     $('#datepicker').daterangepicker({
         opens: 'left'
     }, function (start, end, label) {
-        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         filterArticlesByDate(start, end);
     });
 });
@@ -48,11 +47,19 @@ async function loadArticles() {
         }
         else {
             var data = await response.json()
-            displayArticles(data.value);
+            displayLastUpdated(data.value.lastUpdated);
+            displayArticles(data.value.articles);
         }
     } catch (error) {
         handleLoadError(error);
     }
+}
+
+function displayLastUpdated(date) {
+    var lastUpdatedElement = document.querySelector('.feed-last-updated');
+    var dateText;
+
+    lastUpdatedElement.innerHTML = `Last updated: ${date}`;
 }
 
 function displayArticles(data) {

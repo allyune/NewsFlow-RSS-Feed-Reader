@@ -2,7 +2,15 @@
 
 @{
     Layout = "_FeedReaderLayout";
-    ViewData["Title"] = "NewsFlow: Minimalistic RSS Reader";
+    if (Model is not null)
+    {
+        ViewData["Title"] = $"{Model.Name} - Read RSS Feed with NewsFlow";
+    }
+    else
+    {
+        ViewData["Title"] = "404 - Rss feed not found"; ;
+    }
+
 }
 
 @if (ViewData.Model == null)
@@ -47,19 +55,7 @@
             </div>
         </div>
     </div>
-    <p class="feed-updated">
-        Last Updated:
-        @if (@Model.LastUpdated is not null)
-        {
-
-            @Model.LastUpdated?.ToShortDateString();
-            @Model.LastUpdated?.ToShortTimeString();
-        }
-        else
-        {
-           <span>N/A</span>
-        }
-    </p>
+    <p class="feed-last-updated"> </p>
 </div>
 
 <div class="loading-container">

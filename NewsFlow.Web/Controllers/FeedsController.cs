@@ -82,8 +82,8 @@ namespace NewsFlow.Web.Controllers
             }
             try
             {
-                List<Article> artcles = await _getFeeds.LoadArticles(id);
-                return Ok(Json(artcles));
+                ReadFeedDto articles = await _getFeeds.LoadArticles(id);
+                return Ok(Json(articles));
             }
             catch(FeedNotFoundException ex)
             {
