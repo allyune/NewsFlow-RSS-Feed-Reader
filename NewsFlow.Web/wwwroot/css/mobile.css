@@ -3,7 +3,8 @@
     .feed-card {
         padding: 2px!important;
         margin: 1px!important;
-        margin-bottom: 5px!important;
+        margin-left: 3px;
+        margin-bottom: 5px;
     }
 
     .card-body {
@@ -61,7 +62,7 @@
     }
 
     .btn-add-feed {
-        min-width: auto;
+        min-width: auto!important;
     }
 
     .articles-container {
@@ -102,11 +103,11 @@
     }
 
     .btn-reload {
-        min-width: auto;
+        min-width: fit-content!important;
     }
 
     #btn-unsubscribe {
-        min-width: auto;
+        min-width: fit-content!important;
     }
  
 }
