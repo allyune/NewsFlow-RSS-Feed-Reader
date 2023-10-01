@@ -124,14 +124,10 @@ namespace NewsFlow.Web.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteFeed([FromBody] string[] ids)
         {
-            Console.WriteLine("CONTROLLER");
-            Console.WriteLine(ids[0]);
             foreach (var feedId in ids)
             {
                 Guid id;
                 bool isGuid = Guid.TryParse(feedId, out id);
-                Console.WriteLine(feedId);
-                Console.WriteLine(id);
                 if (!isGuid)
                 {
                     return BadRequest("Wrong Feed Id format.");

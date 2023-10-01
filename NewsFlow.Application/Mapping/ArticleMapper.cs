@@ -14,7 +14,7 @@ namespace NewsFlow.Application.Mapping
                     item.Id,
                     item.Title.Text,
                     ParseArticleContent(item),
-                    item.PublishDate.Date,
+                    item.PublishDate.DateTime,
                     item.Links.Select(l => l.Uri.AbsoluteUri).ToList(),
                     ParseAuthors(item),
                     item.Categories.Select(c => c.Name).ToList());

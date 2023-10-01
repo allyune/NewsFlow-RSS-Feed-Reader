@@ -61,7 +61,7 @@
     }
 
     .btn-add-feed {
-        min-width: auto;
+        min-width: auto!important;
     }
 
     .articles-container {
