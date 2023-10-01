@@ -9,6 +9,7 @@ using NewsFlow.Application.Mapping;
 using System.Runtime.Serialization;
 using NewsFlow.Application.UseCases.Helpers;
 using NewsFlow.Domain.Entities;
+using NewsFlow.Application.DTOs;
 
 namespace NewsFlow.Application.UseCases.LoadFeeds
 {
@@ -45,7 +46,7 @@ namespace NewsFlow.Application.UseCases.LoadFeeds
 			return feed;
 		}
 
-        public async Task<List<Article>> LoadArticles(Guid feedId)
+        public async Task<ReadFeedDto> LoadArticles(Guid feedId)
         {
             Models.Feed? savedFeed = await _feedRepository.GetAsync(f => f.Id == feedId);
             if (savedFeed is null)
@@ -68,8 +69,32 @@ namespace NewsFlow.Application.UseCases.LoadFeeds
             var articles = items.Select(
                 _mapper.FeedItemToArticle)
                 .ToList();
+            DateTime? lastUpdated = GetFeedLastUpdated(feed);
+            return ReadFeedDto.Create(articles, lastUpdated); 
+        }
 
-            return articles; 
+        private DateTime? GetFeedLastUpdated(SyndicationFeed feed)
+        {
+            try
+            {
+                var date = feed.LastUpdatedTime.DateTime;
+                //when last updated is not present,
+                //invalid date is returned by the parser (e.g. 01/01/0001).
+                // checking whether date makes sense.
+                if (date.Year > DateTime.Now.Year - 20)
+                {
+                    return date;
+                }
+                else
+                {
+                    return feed.Items.OrderByDescending(
+                        i => i.PublishDate).First().PublishDate.DateTime;
+                }
+            }
+            catch (XmlException)
+            {
+                return null;
+            }
         }
     }
 }

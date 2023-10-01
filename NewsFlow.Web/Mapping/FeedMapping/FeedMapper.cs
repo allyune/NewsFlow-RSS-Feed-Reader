@@ -22,31 +22,6 @@ namespace NewsFlow.Web.Mapping.FeedMapping
             }
             return link;
         }
-        private DateTime? GetFeedLastUpdated(string feedLink)
-        {
-            using var reader = XmlReader.Create(feedLink);
-            var feed = SyndicationFeed.Load(reader);
-            try
-            {
-                var date = feed.LastUpdatedTime.DateTime;
-                //when last updated is not present,
-                //invalid date is occasionally produced (e.g. 01/01/0001).
-                // checking whether date makes sense.
-                if (date.Year > DateTime.Now.Year - 20)
-                {
-                    return date;
-                }
-                else
-                {
-                    return feed.Items.OrderByDescending(
-                        i => i.PublishDate).First().PublishDate.DateTime;
-                }
-            }
-            catch (XmlException)
-            {
-                return null;
-            }
-        }
 
         public FeedMetadataViewModel FeedMetadataToViewModel(Feed feedModel)
         {
@@ -57,12 +32,9 @@ namespace NewsFlow.Web.Mapping.FeedMapping
 
         public FeedViewModel FeedToViewModel(Feed feedModel)
         {
-            DateTime? lastUpdated = GetFeedLastUpdated(feedModel.Link);
             return FeedViewModel.Create(
                 feedModel.Name,
-                feedModel.Description,
-                GetRootDomain(feedModel.Link),
-                lastUpdated);
+                GetRootDomain(feedModel.Link));
         }
     }
 }
