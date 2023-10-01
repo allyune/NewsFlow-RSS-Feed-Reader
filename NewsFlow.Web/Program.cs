@@ -16,7 +16,7 @@ builder.Configuration.AddJsonFile("appsettings.Development.json");
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<RssDbContext>(options =>
-options.UseNpgsql(builder.Configuration.GetConnectionString("RssDbConnectionString")));
+options.UseNpgsql(builder.Configuration.GetConnectionString("AzureConnectionString")));
 builder.Services.AddScoped<IAsyncFeedRepository, AsyncFeedRepository>();
 builder.Services.AddScoped<IGetFeeds, GetFeeds>();
 builder.Services.AddScoped<IAddFeeds, AddFeeds>();
